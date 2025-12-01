@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tarifs fournisseurs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #f3f4f6;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #111827;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 0.8rem 1rem;
+      background: #111827;
+      color: white;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .layout {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+    }
+    .sidebar {
+      width: 280px;
+      max-width: 100%;
+      background: #e5e7eb;
+      border-right: 1px solid #d1d5db;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      overflow-y: auto;
+    }
+    .sidebar-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .supplier-btn {
+      width: 100%;
+      text-align: left;
+      padding: 0.5rem 0.7rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      background: #f9fafb;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    .supplier-btn.small {
+      font-size: 0.85rem;
+      padding-left: 1.6rem;
+    }
+    .supplier-btn small {
+      font-size: 0.75rem;
+      color: #4b5563;
+    }
+    .supplier-btn.active {
+      background: #111827;
+      color: #f9fafb;
+    }
+    .group-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #4b5563;
+      margin-top: 0.25rem;
+      margin-bottom: -0.25rem;
+      padding: 0 0.1rem;
+    }
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+    }
+    .top-bar {
+      padding: 0.6rem 0.9rem;
+      background: #f9fafb;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .top-info {
+      font-size: 0.85rem;
+    }
+    .btn {
+      background: #111827;
+      color: white;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    .viewer {
+      flex: 1;
+      min-height: 0;
+      padding: 0.5rem;
+    }
+    .viewer-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      background: #6b7280;
+      display: flex;
+    }
+    object {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .fallback {
+      color: #f9fafb;
+      margin: auto;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+    .fallback a {
+      color: #fbbf24;
+      text-decoration: underline;
+    }
+    @media (max-width: 768px) {
+      .layout {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        border-right: none;
+        border-bottom: 1px solid #d1d5db;
+      }
+      .group-label {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>Tarifs fournisseurs – Visualisation directe</header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-title">Fournisseurs</div>
+
+      <div class="group-label">Kaviari</div>
+      <button class="supplier-btn active" data-id="kaviari">
+        <span>Kaviari</span>
+        <small>Tarif restauration 2025</small>
+      </button>
+
+      <div class="group-label">Joseph Perrier</div>
+      <button class="supplier-btn" data-id="jp_tarif">
+        <span>Joseph Perrier</span>
+        <small>Tarif JRE 2025</small>
+      </button>
+      <button class="supplier-btn" data-id="jp_bc">
+        <span>Joseph Perrier</span>
+        <small>Bon de commande JRE 2025</small>
+      </button>
+
+      <div class="group-label">Moisans</div>
+      <button class="supplier-btn small" data-id="mo_trad_dj">
+        <span>TRAD 2024 – DJ</span>
+        <small>Tarifs PRO TRAD 2024 DJ V29012024</small>
+      </button>
+      <button class="supplier-btn small" data-id="mo_trad">
+        <span>TRAD 2024</span>
+        <small>Tarifs PRO TRAD 2024</small>
+      </button>
+      <button class="supplier-btn small" data-id="mo_vins">
+        <span>Vins 2024</span>
+        <small>Catalogue des vins PRO</small>
+      </button>
+      <button class="supplier-btn small" data-id="mo_alcools">
+        <span>Alcools dénaturés 2023</span>
+        <small>Tarifs généraux alcools dénaturés</small>
+      </button>
+    </aside>
+
+    <main class="main">
+      <div class="top-bar">
+        <div class="top-info">
+          <strong id="currentName">Kaviari</strong> – <span id="currentDesc">Tarif restauration 2025</span>
+        </div>
+        <a id="downloadLink" class="btn" href="TARIF_KAVIARI_2025.pdf" download>
+          Télécharger le PDF
+        </a>
+      </div>
+
+      <div class="viewer">
+        <div class="viewer-inner">
+          <object id="pdfViewer" data="TARIF_KAVIARI_2025.pdf" type="application/pdf">
+            <div class="fallback">
+              Impossible d'afficher le PDF directement dans ce navigateur.<br />
+              Vous pouvez le <a id="fallbackLink" href="TARIF_KAVIARI_2025.pdf">télécharger en cliquant ici</a>.
+            </div>
+          </object>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Associe chaque bouton à un PDF
+    const pdfs = {
+      kaviari: {
+        name: "Kaviari",
+        desc: "Tarif restauration 2025",
+        file: "TARIF_KAVIARI_2025.pdf"
+      },
+      jp_tarif: {
+        name: "Joseph Perrier",
+        desc: "Tarif JRE 2025",
+        file: "Joseph Perrier_Tarif JRE 2025.pdf"
+      },
+      jp_bc: {
+        name: "Joseph Perrier",
+        desc: "Bon de commande JRE 2025",
+        file: "JP_Offre JRE_Bon de commande.pdf"
+      },
+      mo_trad_dj: {
+        name: "Moisans",
+        desc: "Tarifs PRO TRAD 2024 DJ V29012024",
+        file: "Tarifs PRO TRAD 2024 DJ V29012024.pdf"
+      },
+      mo_trad: {
+        name: "Moisans",
+        desc: "Tarifs PRO TRAD 2024",
+        file: "Tarifs PRO TRAD 2024.pdf"
+      },
+      mo_vins: {
+        name: "Moisans",
+        desc: "Catalogue des vins 2024 PRO",
+        file: "VINS 2024 PRO.pdf"
+      },
+      mo_alcools: {
+        name: "Moisans",
+        desc: "Tarifs généraux alcools dénaturés 2023",
+        file: "2023 Tarifs Moisans alcools Dénaturés.pdf"
+      }
+    };
+
+    const buttons = document.querySelectorAll(".supplier-btn");
+    const viewer = document.getElementById("pdfViewer");
+    const currentName = document.getElementById("currentName");
+    const currentDesc = document.getElementById("currentDesc");
+    const downloadLink = document.getElementById("downloadLink");
+    const fallbackLink = document.getElementById("fallbackLink");
+
+    function showPdf(id) {
+      const pdf = pdfs[id];
+      if (!pdf) return;
+      viewer.data = pdf.file;
+      currentName.textContent = pdf.name;
+      currentDesc.textContent = pdf.desc;
+      downloadLink.href = pdf.file;
+      if (fallbackLink) fallbackLink.href = pdf.file;
+
+      buttons.forEach(b => b.classList.remove("active"));
+      const btn = document.querySelector('.supplier-btn[data-id="' + id + '"]');
+      if (btn) btn.classList.add("active");
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-id");
+        showPdf(id);
+      });
+    });
+  </script>
+</body>
+</html>
